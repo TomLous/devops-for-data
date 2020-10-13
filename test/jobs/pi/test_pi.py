@@ -1,5 +1,6 @@
-from src.jobs.pi import run, f
 import pytest
+
+from src.jobs.pi import run, f
 
 
 def test_f():
@@ -9,7 +10,6 @@ def test_f():
 
 
 def test_pi_run(spark_session):
-
     expected = 3.1438
     conf = {
         "partitions": 4
