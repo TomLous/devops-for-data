@@ -1,9 +1,10 @@
 import argparse
-import os
-from pyspark.sql import SparkSession
 import importlib
-import sys
 import json
+import os
+import sys
+
+from pyspark.sql import SparkSession
 
 if os.path.exists('jobs.zip'):
     sys.path.insert(0, 'jobs.zip')
@@ -18,18 +19,17 @@ def get_config(path, job):
 
 
 if __name__ == '__main__':
-
-    parser = argparse.ArgumentParser(description='My pyspark job arguments')
+    parser = argparse.ArgumentParser(description='pyspark job arguments')
     parser.add_argument('--job', type=str, required=True, dest='job_name',
                         help='The name of the spark job you want to run')
     parser.add_argument('--res-path', type=str, required=True, dest='res_path',
-                        help='Path to the jobs resurces')
+                        help='Path to the jobs resources')
 
     args = parser.parse_args()
 
-    spark = SparkSession\
-        .builder\
-        .appName(args.job_name)\
+    spark = SparkSession \
+        .builder \
+        .appName(args.job_name) \
         .getOrCreate()
 
     job_module = importlib.import_module('jobs.%s' % args.job_name)

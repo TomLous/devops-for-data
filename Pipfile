@@ -7,7 +7,12 @@ name = 'pypi'
 python_version = "3.8.2"
 
 [packages]
-flake8 = "*"
-pytest-spark = ">=0.6.0"
 pyspark = ">=3.0.0"
+
+[dev-packages]
+pip = ">=20.0.0"
+pipenv = "*"
+bumpversion = "*"
+pytest-spark = ">=0.6.0"
 pytest-cov = "*"
+flake8 = "*"
