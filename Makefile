@@ -7,10 +7,10 @@ init:
 	pipenv install --dev --deploy
 
 analyze:
-	flake8 ./src
+	pipenv run flake8 ./src
 
 tests:
-	pytest --cov=src test/jobs/
+	pipenv run pytest --cov=src test/jobs/
 
 package:
 	rm -rf build
