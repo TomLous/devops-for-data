@@ -1,5 +1,7 @@
 .DEFAULT_GOAL := run
 
+ROOT_DIR:=$(strip $(shell dirname $(realpath $(lastword $(MAKEFILE_LIST)))))
+
 init:
 	pipenv --three install
 	pipenv shell
@@ -8,19 +10,18 @@ init:
 analyze:
 	flake8 ./src
 
-
-run_tests:
+tests:
 	pytest --cov=src test/jobs/
 
 package:
-	find . -name '__pycache__' | xargs rm -rf
-	rm -f jobs.zip
-	cd src/ && zip -r ../jobs.zip jobs/
+	rm -rf build
+	rm -rf dist
+	python setup.py bdist_egg
 
 requirements:
 	pipenv lock -r > requirements.txt
 	pipenv lock -r --dev-only > dev-requirements.txt
 
-
 run_local: package
-	spark-submit --py-files jobs.zip src/main.py --job $(JOB_NAME) --res-path $(CONF_PATH)
+	DIST=$$(ls $(ROOT_DIR)/dist/*.egg); \
+    spark-submit --py-files $$DIST src/main.py --job $(JOB_NAME) --res-path $(ROOT_DIR)/$(CONF_PATH)
