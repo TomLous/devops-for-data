@@ -4,7 +4,6 @@ ROOT_DIR:=$(strip $(shell dirname $(realpath $(lastword $(MAKEFILE_LIST)))))
 
 init:
 	pipenv --three install
-	pipenv shell
 	pipenv install --dev --deploy
 
 analyze:
