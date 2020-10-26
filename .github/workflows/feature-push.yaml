@@ -10,32 +10,31 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 10
 
+    steps:
+      - name: Check out repository code
+        uses: actions/checkout@v2
 
-  steps:
-    - name: Check out repository code
-      uses: actions/checkout@v2
+      - name: Setup Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: "3.9"
 
-    - name: Setup Python
-      uses: actions/setup-python@v2
-      with:
-        python-version: "3.9"
+      - name: Install pipenv
+        run: python -m pip install --upgrade pipenv wheel
 
-    - name: Install pipenv
-      run: python -m pip install --upgrade pipenv wheel
+      - id: cache-pipenv
+        uses: actions/cache@v1
+        with:
+          path: ~/.local/share/virtualenvs
+          key: ${{ runner.os }}-pipenv-${{ hashFiles('**/Pipfile.lock') }}
 
-    - id: cache-pipenv
-      uses: actions/cache@v1
-      with:
-        path: ~/.local/share/virtualenvs
-        key: ${{ runner.os }}-pipenv-${{ hashFiles('**/Pipfile.lock') }}
+      - name: Install dependencies
+        if: steps.cache-pipenv.outputs.cache-hit != 'true'
+        run: make init
 
-    - name: Install dependencies
-      if: steps.cache-pipenv.outputs.cache-hit != 'true'
-      run: make init
+      - name: Run analyzer
+        run: make analyze
 
-    - name: Run analyzer
-      run: make analyze
-
-    - name: Run test suite
-      run: make tests
+      - name: Run test suite
+        run: make tests
 
