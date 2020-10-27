@@ -41,3 +41,9 @@ jobs:
       - name: Run test suite
         run: make tests
 
+      - name: Upload test results
+        uses: actions/upload-artifact@v2
+        with:
+          name: pytest-results
+          path: junit/test-results.xml
+          if: ${{ always() }}

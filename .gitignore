@@ -50,6 +50,7 @@ coverage.xml
 *.py,cover
 .hypothesis/
 .pytest_cache/
+junit
 
 # Translations
 *.mo
@@ -133,6 +134,3 @@ dmypy.json
 
 # PyCharm
 .idea
-
-# Package
-jobs.zip

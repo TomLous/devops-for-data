@@ -13,7 +13,8 @@ analyze:
 	pipenv run flake8 ./src
 
 tests:
-	pipenv run pytest --cov=src test/jobs/
+	rm -rf junit;\
+	pipenv run pytest --cov=src test/jobs/ --doctest-modules --junitxml=junit/test-results.xml --cov-report=xml --cov-report=html
 
 package:
 	rm -rf build
