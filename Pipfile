@@ -1,0 +1,18 @@
+[[source]]
+url = 'https://pypi.python.org/simple'
+verify_ssl = true
+name = 'pypi'
+
+[requires]
+python_version = "3.8.2"
+
+[packages]
+pyspark = ">=3.0.0"
+
+[dev-packages]
+pip = ">=20.0.0"
+pipenv = "*"
+bump2version = "*"
+pytest-spark = ">=0.6.0"
+pytest-cov = "*"
+flake8 = "*"
