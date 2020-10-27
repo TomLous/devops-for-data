@@ -42,12 +42,16 @@ jobs:
       - name: Run test suite
         run: make tests
 
-      - name: Upload test results
+      - name: Upload test results (junit)
         uses: actions/upload-artifact@v2
         if: ${{ always() }}
         with:
           name: pytest-results
-          path: |
-            junit/test-results.xml
-            htmlcov
-            coverage.xml
+          path: junit/test-results.xml
+
+      - name: Upload test results (html)
+        uses: actions/upload-artifact@v2
+        if: ${{ always() }}
+        with:
+          name: pytest-html
+          path: htmlcov
