@@ -1,21 +1,21 @@
-name: feature
+name: start-release
 
-on:
-  push:
-    branches:
-      - 'feature/**'
-      - 'hotfix/**'
-  pull_request:
-    types: [ opened, reopened ]
-    branches:
-      - 'main'
+on: workflow_dispatch
 
 jobs:
-  test:
+  release:
     runs-on: ubuntu-latest
     timeout-minutes: 10
+    if: github.ref == 'refs/heads/main'
 
     steps:
+      - name: Create Release Branch
+        uses: peterjgrainger/action-create-branch@v2.0.1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          branch: 'release'
+
       - name: Check out repository code
         uses: actions/checkout@v2
 
@@ -37,6 +37,9 @@ jobs:
         if: steps.cache-pipenv.outputs.cache-hit != 'true'
         run: make init
 
+      - name: Bump version
+        run: make bump-minor
+
       - name: Run analyzer
         run: make analyze
 
@@ -55,4 +58,16 @@ jobs:
         if: ${{ always() }}
         with:
           name: pytest-html
-          path: htmlcov
+          path: htmlcov/
+
+      - name: Package code
+        run: make package
+
+      - name: Upload package
+        uses: actions/upload-artifact@v2
+        with:
+          name: egg
+          path: dist/
+
+      - name: Deploy package to dev
+        run: echo "DEPLOY TO DEV"

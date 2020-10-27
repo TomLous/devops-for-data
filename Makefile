@@ -21,6 +21,9 @@ package:
 	rm -rf dist
 	python setup.py bdist_egg
 
+bump_minor:
+
+
 requirements:
 	pipenv lock -r > requirements.txt
 	pipenv lock -r --dev-only > dev-requirements.txt

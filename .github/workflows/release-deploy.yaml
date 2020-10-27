@@ -1,0 +1,17 @@
+name: release-deploy
+
+on:
+  workflow_dispatch:
+  inputs:
+    environment:
+      description: 'release to test or test & prod (test / prod)'
+      required: true
+      default: 'test'
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    if: github.ref == 'refs/heads/release'
+
+
