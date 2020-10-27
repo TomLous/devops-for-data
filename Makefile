@@ -23,10 +23,10 @@ package:
 	tar czf "release.gzip" dist
 
 bump_minor:
-	pipenv run bump2version minor
+	pipenv run bump2version minor --allow-dirty --list
 
 bump_major:
-	pipenv run bump2version minor
+	pipenv run bump2version minor --allow-dirty --list
 
 requirements:
 	pipenv lock -r > requirements.txt

@@ -13,13 +13,20 @@ on:
         default: 'minor'
 
 jobs:
-  release:
+  release-deploy:
     runs-on: ubuntu-latest
     timeout-minutes: 10
 
     if: github.ref == 'refs/heads/main'
 
     steps:
+      - name: Delete branch
+        uses: dawidd6/action-delete-branch@v3
+        continue-on-error: true
+        with:
+          github_token: ${{github.token}}
+          branches: release
+
       - name: Create Release Branch
         uses: peterjgrainger/action-create-branch@v2.0.1
         env:

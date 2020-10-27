@@ -11,7 +11,7 @@ on:
       - 'main'
 
 jobs:
-  test:
+  feature:
     runs-on: ubuntu-latest
     timeout-minutes: 10
 
