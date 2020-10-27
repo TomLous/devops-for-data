@@ -3,15 +3,127 @@ name: release-deploy
 on:
   workflow_dispatch:
   inputs:
-    environment:
-      description: 'release to test or test & prod (test / prod)'
+    release_type:
+      description: 'test or prod?'
       required: true
       default: 'test'
+    bump_type:
+      description: 'major or minor?'
+      required: true
+      default: 'minor'
 
 jobs:
   release:
     runs-on: ubuntu-latest
     timeout-minutes: 10
-    if: github.ref == 'refs/heads/release'
 
+    if: github.ref == 'refs/heads/main'
+
+    steps:
+      - name: Create Release Branch
+        uses: peterjgrainger/action-create-branch@v2.0.1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          branch: 'release'
+
+      - name: Check out repository code
+        uses: actions/checkout@v2
+        with:
+          ref: 'release'
+
+      - name: Setup Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: "3.8.2"
+
+      - name: Install pipenv
+        run: make install
+
+      - id: cache-pipenv
+        uses: actions/cache@v1
+        with:
+          path: ~/.local/share/virtualenvs
+          key: ${{ runner.os }}-pipenv-${{ hashFiles('**/Pipfile.lock') }}
+
+      - name: Install dependencies
+        if: steps.cache-pipenv.outputs.cache-hit != 'true'
+        run: make init
+
+      - name: Bump minor version
+        if: github.event.inputs.bump_type == 'minor'
+        run: make bump_minor
+
+      - name: Bump major version
+        if: github.event.inputs.bump_type == 'major'
+        run: make bump_major
+
+      - name: Run analyzer
+        run: make analyze
+
+      - name: Run test suite
+        run: make tests
+
+      - name: Upload test results (junit)
+        uses: actions/upload-artifact@v2
+        if: ${{ always() }}
+        with:
+          name: pytest-results
+          path: junit/test-results.xml
+
+      - name: Upload test results (html)
+        uses: actions/upload-artifact@v2
+        if: ${{ always() }}
+        with:
+          name: pytest-html
+          path: htmlcov/
+
+      - name: Package code
+        run: make package
+
+      - name: Upload package
+        uses: actions/upload-artifact@v2
+        with:
+          name: egg
+          path: dist/
+
+      - name: Deploy package to dev
+        run: echo "DEPLOY TO DEV"
+
+      - name: Create release
+        id: create_release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: ${{ github.ref }}
+          release_name: Release ${{ github.ref }}
+          draft: false
+          prerelease: false
+
+      - name: Upload Release Asset
+        id: upload-release-asset
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: release.gzip
+          asset_name: release
+          asset_content_type: application/gzip
+
+      - name: Deploy package to test
+        run: echo "DEPLOY TO TEST"
+
+      - name: Deploy package to test
+        if: github.event.inputs.release_type == 'prod'
+        run: echo "DEPLOY TO PROD"
+
+      - name: Merge release -> main
+        uses: devmasx/merge-branch@v1.3.0
+        with:
+          type: now
+          from_branch: release
+          target_branch: main
+          github_token: ${{ github.token }}
 

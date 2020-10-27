@@ -20,9 +20,13 @@ package:
 	rm -rf build
 	rm -rf dist
 	python setup.py bdist_egg
+	tar czf "release.gzip" dist
 
 bump_minor:
+	pipenv run bump2version minor
 
+bump_major:
+	pipenv run bump2version minor
 
 requirements:
 	pipenv lock -r > requirements.txt
