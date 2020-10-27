@@ -1,4 +1,4 @@
-name: feature-push
+name: feature
 
 on:
   push:
@@ -47,4 +47,7 @@ jobs:
         if: ${{ always() }}
         with:
           name: pytest-results
-          path: junit/test-results.xml
+          path: |
+            junit/test-results.xml
+            htmlcov
+            coverage.xml
