@@ -2,6 +2,9 @@
 
 ROOT_DIR:=$(strip $(shell dirname $(realpath $(lastword $(MAKEFILE_LIST)))))
 
+install:
+	python -m pip install --upgrade pipenv wheel
+
 init:
 	pipenv --three install
 	pipenv install --dev --deploy

@@ -4,6 +4,9 @@ on:
   push:
     branches:
       - 'feature/**'
+  pull-request:
+    branches:
+      - main
 
 jobs:
   test:
@@ -20,7 +23,7 @@ jobs:
           python-version: "3.8.2"
 
       - name: Install pipenv
-        run: python -m pip install --upgrade pipenv wheel
+        run: make install
 
       - id: cache-pipenv
         uses: actions/cache@v1
