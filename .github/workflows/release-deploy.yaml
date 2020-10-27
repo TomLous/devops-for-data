@@ -2,15 +2,15 @@ name: release-deploy
 
 on:
   workflow_dispatch:
-  inputs:
-    release_type:
-      description: 'test or prod?'
-      required: true
-      default: 'test'
-    bump_type:
-      description: 'major or minor?'
-      required: true
-      default: 'minor'
+    inputs:
+      release_type:
+        description: 'test or prod?'
+        required: true
+        default: 'test'
+      bump_type:
+        description: 'major or minor?'
+        required: true
+        default: 'minor'
 
 jobs:
   release:
