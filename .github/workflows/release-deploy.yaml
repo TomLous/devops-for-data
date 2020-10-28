@@ -93,6 +93,9 @@ jobs:
       - name: Package code
         run: make package
 
+      - name: Push version tag
+        run: git push
+
       - name: Upload package
         uses: actions/upload-artifact@v2
         with:
