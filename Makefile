@@ -30,7 +30,7 @@ bump_minor:
 	@pipenv run bump2version minor --allow-dirty --list
 
 bump_major:
-	@pipenv run bump2version minor --allow-dirty --list
+	@pipenv run bump2version major --allow-dirty --list
 
 version:
 	@cat setup.cfg | grep version | sed s,"^.*= *",,

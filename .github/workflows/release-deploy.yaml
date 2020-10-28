@@ -66,11 +66,11 @@ jobs:
 
       - name: Bump minor version
         if: github.event.inputs.bump_type == 'minor'
-        run: exit 1; #TODO bump minor
+        run: make bump_minor
 
       - name: Bump major version
         if: github.event.inputs.bump_type == 'major'
-        run: exit 1; #TODO bump major
+        run: make bump_major
 
       - name: Set variables
         id: vars
@@ -100,7 +100,9 @@ jobs:
         run: make package
 
       - name: Push version & tag
-        run: exit 1; # TODO
+        run: |
+          git push
+          git push --tags
 
       - name: Upload package
         uses: actions/upload-artifact@v2
@@ -144,7 +146,6 @@ jobs:
         run: |
           git fetch
           git checkout main
-          git --no-pager branch
           git merge release
           git push --tags origin main
           git branch -d release
