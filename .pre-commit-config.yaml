@@ -1,0 +1,18 @@
+repos:
+  - repo: local
+    hooks:
+      - id: lock
+        name: pipenv lock
+        stages: [push]
+        language: system
+        entry: pipenv lock
+        files: Pipfile
+        pass_filenames: False
+
+      - id: pipenv_to_requirements
+        name: pipenv_to_requirements
+        stages: [push]
+        language: system
+        entry: make requirements
+        files: "^Pipfile(?:.lock)?$"
+        pass_filenames: False

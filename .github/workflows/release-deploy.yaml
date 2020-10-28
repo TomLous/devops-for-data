@@ -65,6 +65,7 @@ jobs:
           git config --global user.email "$GITHUB_ACTOR@users.noreply.github.com"
 
       - name: Show vars 1
+        continue-on-error: true
         run: |
           git branch --show-current
           git --no-pager log --decorate=short --pretty=oneline -n 4
@@ -79,6 +80,7 @@ jobs:
         run: make bump_major
 
       - name: Show vars 2
+        continue-on-error: true
         run: |
           git branch --show-current
           git --no-pager log --decorate=short --pretty=oneline -n 4
@@ -112,6 +114,7 @@ jobs:
         run: make package
 
       - name: Show vars 3
+        continue-on-error: true
         run: |
           git branch --show-current
           git --no-pager log --decorate=short --pretty=oneline -n 4
@@ -123,6 +126,7 @@ jobs:
           git push --tags
 
       - name: Show vars 4
+        continue-on-error: true
         run: |
           git branch --show-current
           git --no-pager log --decorate=short --pretty=oneline -n 4
