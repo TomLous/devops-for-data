@@ -170,15 +170,12 @@ jobs:
         if: github.event.inputs.release_type == 'prod'
         run: echo "DEPLOY ${{ steps.vars.outputs.version }} TO PROD"
 
-      - name: Check out main branch
-        uses: actions/checkout@v2
-        with:
-          ref: 'main'
 
       - name: Merge release -> main
         continue-on-error: true
         run: |
           git checkout main
+          git --no-pager branch
           git merge release
           git push --tags origin master
           git branch -d release

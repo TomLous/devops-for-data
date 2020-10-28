@@ -9,6 +9,10 @@ init:
 	@pipenv --three install
 	pipenv install --dev --deploy
 
+init_local:
+	@pre-commit install
+	pipenv shell
+
 analyze:
 	@pipenv run flake8 ./src
 
@@ -34,6 +38,9 @@ version:
 requirements:
 	@pipenv lock -r > requirements.txt
 	pipenv lock -r --dev-only > dev-requirements.txt
+
+create_hotfix:
+	@git checkout -b hotfix $(git tag | grep -E "^v[0-9]+\.[0-9]+\.[0-9]+$$" | sort -Vr | head -n 1)
 
 run_local: package
 	@DIST=$$(ls $(ROOT_DIR)/dist/*.egg); \
