@@ -176,10 +176,19 @@ jobs:
           ref: 'main'
 
       - name: Merge release -> main
-        uses: devmasx/merge-branch@v1.3.0
-        with:
-          type: now
-          from_branch: release
-          target_branch: main
-          github_token: ${{ github.token }}
+        continue-on-error: true
+        run: |
+          git checkout main
+          git merge release
+          git push --tags origin master
+          git branch -d release
+          git push origin :release
+
+#      - name: Merge release -> main
+#        uses: devmasx/merge-branch@v1.3.0
+#        with:
+#          type: now
+#          from_branch: release
+#          target_branch: main
+#          github_token: ${{ github.token }}
 
