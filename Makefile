@@ -26,7 +26,7 @@ bump_minor:
 	@pipenv run bump2version minor --allow-dirty --list
 
 bump_major:
-	@pipenv run bump2version minor --allow-dirty --list | grep new_version | sed s,"^.*=",,
+	@pipenv run bump2version minor --allow-dirty --list
 
 version:
 	@cat setup.cfg | grep version | sed s,"^.*= *",,

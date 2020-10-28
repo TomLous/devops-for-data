@@ -15,7 +15,6 @@ on:
 jobs:
   release-deploy:
     runs-on: ubuntu-latest
-    timeout-minutes: 10
 
     if: github.ref == 'refs/heads/main'
 
@@ -52,6 +51,9 @@ jobs:
         with:
           path: ~/.local/share/virtualenvs
           key: ${{ runner.os }}-pipenv-${{ hashFiles('**/Pipfile.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-pipenv-
+            ${{ runner.os }}-
 
       - name: Install dependencies
         if: steps.cache-pipenv.outputs.cache-hit != 'true'
@@ -97,8 +99,10 @@ jobs:
       - name: Package code
         run: make package
 
-      - name: Push version tag
-        run: git push
+      - name: Push version & tag
+        run: |
+          git push
+          git push --tags
 
       - name: Upload package
         uses: actions/upload-artifact@v2
@@ -137,6 +141,11 @@ jobs:
       - name: Deploy package to prod
         if: github.event.inputs.release_type == 'prod'
         run: echo "DEPLOY ${{ steps.vars.outputs.version }} TO PROD"
+
+      - name: Check out main branch
+        uses: actions/checkout@v2
+        with:
+          ref: 'main'
 
       - name: Merge release -> main
         uses: devmasx/merge-branch@v1.3.0

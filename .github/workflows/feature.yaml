@@ -13,7 +13,6 @@ on:
 jobs:
   feature:
     runs-on: ubuntu-latest
-    timeout-minutes: 10
 
     steps:
       - name: Check out repository code
@@ -32,6 +31,9 @@ jobs:
         with:
           path: ~/.local/share/virtualenvs
           key: ${{ runner.os }}-pipenv-${{ hashFiles('**/Pipfile.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-pipenv-
+            ${{ runner.os }}-
 
       - name: Install dependencies
         if: steps.cache-pipenv.outputs.cache-hit != 'true'
