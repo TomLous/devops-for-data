@@ -100,8 +100,7 @@ jobs:
         run: make package
 
       - name: Push version & tag
-        run: |
-          # TODO Push commit & tags
+        run: exit 1; # TODO
 
       - name: Upload package
         uses: actions/upload-artifact@v2
