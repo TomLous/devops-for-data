@@ -64,6 +64,11 @@ jobs:
           git config --global user.name "$GITHUB_ACTOR"
           git config --global user.email "$GITHUB_ACTOR@users.noreply.github.com"
 
+      - name: Show vars
+        run: |
+          git branch --show-current
+
+
       - name: Bump minor version
         if: github.event.inputs.bump_type == 'minor'
         run: make bump_minor
