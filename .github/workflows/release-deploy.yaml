@@ -66,11 +66,11 @@ jobs:
 
       - name: Bump minor version
         if: github.event.inputs.bump_type == 'minor'
-        run: #TODO bump minor
+        run: exit 1; #TODO bump minor
 
       - name: Bump major version
         if: github.event.inputs.bump_type == 'major'
-        run: #TODO bump major
+        run: exit 1; #TODO bump major
 
       - name: Set variables
         id: vars
