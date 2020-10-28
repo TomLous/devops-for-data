@@ -3,7 +3,7 @@ name: feature
 on:
   push:
     branches:
-      - 'features/**'
+      - 'feature/**'
       - 'hotfix'
   pull_request:
     types: [ opened, reopened ]
