@@ -40,7 +40,7 @@ requirements:
 	pipenv lock -r --dev-only > dev-requirements.txt
 
 create_hotfix:
-	@git checkout -b hotfix $(git tag | grep -E "^v[0-9]+\.[0-9]+\.[0-9]+$$" | sort -Vr | head -n 1)
+	git checkout -b hotfix $$(git tag | grep -E "^v[0-9]+\.[0-9]+\.[0-9]+$$" | sort -Vr | head -n 1)
 
 run_local: package
 	@DIST=$$(ls $(ROOT_DIR)/dist/*.egg); \
