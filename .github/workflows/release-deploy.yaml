@@ -175,11 +175,10 @@ jobs:
         continue-on-error: true
         run: |
           git fetch
-          git --no-pager branch
           git checkout main
           git --no-pager branch
           git merge release
-          git push --tags origin master
+          git push --tags origin main
           git branch -d release
           git push origin :release
 
