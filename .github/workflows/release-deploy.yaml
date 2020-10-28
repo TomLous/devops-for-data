@@ -64,10 +64,11 @@ jobs:
           git config --global user.name "$GITHUB_ACTOR"
           git config --global user.email "$GITHUB_ACTOR@users.noreply.github.com"
 
-      - name: Show vars
+      - name: Show vars 1
         run: |
           git branch --show-current
-
+          git --no-pager log --decorate=short --pretty=oneline -n 4
+          git describe --tags
 
       - name: Bump minor version
         if: github.event.inputs.bump_type == 'minor'
@@ -76,6 +77,12 @@ jobs:
       - name: Bump major version
         if: github.event.inputs.bump_type == 'major'
         run: make bump_major
+
+      - name: Show vars 2
+        run: |
+          git branch --show-current
+          git --no-pager log --decorate=short --pretty=oneline -n 4
+          git describe --tags
 
       - name: Set variables
         id: vars
@@ -104,10 +111,22 @@ jobs:
       - name: Package code
         run: make package
 
+      - name: Show vars 3
+        run: |
+          git branch --show-current
+          git --no-pager log --decorate=short --pretty=oneline -n 4
+          git describe --tags
+
       - name: Push version & tag
         run: |
           git push
           git push --tags
+
+      - name: Show vars 4
+        run: |
+          git branch --show-current
+          git --no-pager log --decorate=short --pretty=oneline -n 4
+          git describe --tags
 
       - name: Upload package
         uses: actions/upload-artifact@v2
