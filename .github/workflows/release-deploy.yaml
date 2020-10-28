@@ -64,13 +64,6 @@ jobs:
           git config --global user.name "$GITHUB_ACTOR"
           git config --global user.email "$GITHUB_ACTOR@users.noreply.github.com"
 
-      - name: Show vars 1
-        continue-on-error: true
-        run: |
-          git branch --show-current
-          git --no-pager log --decorate=short --pretty=oneline -n 4
-          git describe --tags
-
       - name: Bump minor version
         if: github.event.inputs.bump_type == 'minor'
         run: make bump_minor
@@ -78,13 +71,6 @@ jobs:
       - name: Bump major version
         if: github.event.inputs.bump_type == 'major'
         run: make bump_major
-
-      - name: Show vars 2
-        continue-on-error: true
-        run: |
-          git branch --show-current
-          git --no-pager log --decorate=short --pretty=oneline -n 4
-          git describe --tags
 
       - name: Set variables
         id: vars
@@ -113,24 +99,10 @@ jobs:
       - name: Package code
         run: make package
 
-      - name: Show vars 3
-        continue-on-error: true
-        run: |
-          git branch --show-current
-          git --no-pager log --decorate=short --pretty=oneline -n 4
-          git describe --tags
-
       - name: Push version & tag
         run: |
           git push
           git push --tags
-
-      - name: Show vars 4
-        continue-on-error: true
-        run: |
-          git branch --show-current
-          git --no-pager log --decorate=short --pretty=oneline -n 4
-          git describe --tags
 
       - name: Upload package
         uses: actions/upload-artifact@v2
@@ -172,7 +144,6 @@ jobs:
 
 
       - name: Merge release -> main
-        continue-on-error: true
         run: |
           git fetch
           git checkout main
@@ -182,11 +153,4 @@ jobs:
           git branch -d release
           git push origin :release
 
-#      - name: Merge release -> main
-#        uses: devmasx/merge-branch@v1.3.0
-#        with:
-#          type: now
-#          from_branch: release
-#          target_branch: main
-#          github_token: ${{ github.token }}
 
