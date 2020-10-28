@@ -55,7 +55,7 @@ jobs:
           path: htmlcov/
 
       - name: Package code
-        run: exit 1; # PACKAGE CODE
+        run: make package
 
       - name: Upload package
         uses: actions/upload-artifact@v2

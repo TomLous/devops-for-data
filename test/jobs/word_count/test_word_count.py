@@ -9,7 +9,7 @@ def test_get_keyval():
 
 
 def test_word_count_run(spark_session):
-    expected_results = [('one', 1), ('two', 1), ('three', 2), ('four', 9), ('test', 1)]
+    expected_results = [('one', 1), ('two', 1), ('three', 2), ('four', 2), ('test', 1)]
     conf = {
         'relative_path': 'test/jobs',
         'words_file_path': '/word_count/resources/word_count.csv'

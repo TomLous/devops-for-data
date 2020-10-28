@@ -66,11 +66,11 @@ jobs:
 
       - name: Bump minor version
         if: github.event.inputs.bump_type == 'minor'
-        run: #TODO bump minor
+        run: exit 1; #TODO bump minor
 
       - name: Bump major version
         if: github.event.inputs.bump_type == 'major'
-        run: #TODO bump major
+        run: exit 1; #TODO bump major
 
       - name: Set variables
         id: vars
@@ -100,8 +100,7 @@ jobs:
         run: make package
 
       - name: Push version & tag
-        run: |
-          # TODO Push commit & tags
+        run: exit 1; # TODO
 
       - name: Upload package
         uses: actions/upload-artifact@v2

@@ -2,7 +2,7 @@ from operator import add
 
 
 def get_keyval(row):
-    word = filter(lambda r: r is not None, row)
+    words = filter(lambda r: r is not None, row)
     return [[w.strip().lower(), 1] for w in words]
 
 

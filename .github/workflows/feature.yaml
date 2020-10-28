@@ -3,7 +3,7 @@ name: feature
 on:
   push:
     branches:
-      - #TODO run all feature/ branches
+      - 'feature/**'
       - 'hotfix'
   pull_request:
     types: [ opened, reopened ]
@@ -37,13 +37,13 @@ jobs:
 
       - name: Install dependencies
         if: steps.cache-pipenv.outputs.cache-hit != 'true'
-        run: exit 1; # RUN INIT
+        run: make init
 
       - name: Run analyzer
-        run: exit 1; # RUN analyzer
+        run: make analyze
 
       - name: Run test suite
-        run: exit 1; # RUN TESTS & CODECOVERAGE
+        run: make tests
 
       - name: Upload test results (junit)
         uses: actions/upload-artifact@v2
