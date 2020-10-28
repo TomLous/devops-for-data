@@ -13,6 +13,6 @@ repos:
         name: pipenv_to_requirements
         stages: [push]
         language: system
-        entry: make requirements
+        entry: TODO check requirements
         files: "^Pipfile(?:.lock)?$"
         pass_filenames: False

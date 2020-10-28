@@ -55,7 +55,7 @@ jobs:
           path: htmlcov/
 
       - name: Package code
-        run: make package
+        run: exit 1; # PACKAGE CODE
 
       - name: Upload package
         uses: actions/upload-artifact@v2
@@ -64,4 +64,4 @@ jobs:
           path: dist/
 
       - name: Deploy package to dev
-        run: echo "DEPLOY TO DEV"
+        run: echo "DEPLOY TO DEV (this is where you would put info for deploying it to your dev env)"

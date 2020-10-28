@@ -66,11 +66,11 @@ jobs:
 
       - name: Bump minor version
         if: github.event.inputs.bump_type == 'minor'
-        run: make bump_minor
+        run: #TODO bump minor
 
       - name: Bump major version
         if: github.event.inputs.bump_type == 'major'
-        run: make bump_major
+        run: #TODO bump major
 
       - name: Set variables
         id: vars
@@ -101,8 +101,7 @@ jobs:
 
       - name: Push version & tag
         run: |
-          git push
-          git push --tags
+          # TODO Push commit & tags
 
       - name: Upload package
         uses: actions/upload-artifact@v2
@@ -141,7 +140,6 @@ jobs:
       - name: Deploy package to prod
         if: github.event.inputs.release_type == 'prod'
         run: echo "DEPLOY ${{ steps.vars.outputs.version }} TO PROD"
-
 
       - name: Merge release -> main
         run: |
