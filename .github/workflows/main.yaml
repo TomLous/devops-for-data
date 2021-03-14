@@ -35,7 +35,8 @@ jobs:
       - name: Install pipenv
         run: make install
 
-      - id: cache-pipenv
+      - name: Cache
+        id: cache-pipenv
         uses: actions/cache@v1
         with:
           path: ~/.local/share/virtualenvs
@@ -70,7 +71,7 @@ jobs:
 
   deploy:
     if: github.ref == 'refs/heads/main'
-    needs: [check,build]
+    needs: [build]
     name: Build & Deploy
     runs-on: ubuntu-latest
 
@@ -83,12 +84,13 @@ jobs:
       - name: Setup Python
         uses: actions/setup-python@v2
         with:
-          python-version: ${{ needs.check.outputs.python_version }}
+          python-version: ${{ needs.build.outputs.python_version }}
 
       - name: Install pipenv
         run: make install
 
-      - id: cache-pipenv
+      - name: Cache
+        id: cache-pipenv
         uses: actions/cache@v1
         with:
           path: ~/.local/share/virtualenvs
@@ -106,7 +108,7 @@ jobs:
         run: make bump-snapshot-and-push
 
       - name: Package code
-      run: make package
+        run: make package
 
       - name: Upload package
         uses: actions/upload-artifact@v2

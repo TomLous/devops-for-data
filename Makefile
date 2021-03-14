@@ -56,7 +56,7 @@ update-requirements:
 update-requirements-and-push: set-github-config update-requirements git-push
 
 # GIT Commands
-set-github-config: guard-GITHUB_ACTOR
+set-github-config:
 	git config --global user.name "$(GITHUB_ACTOR)"
 	git config --global user.email "$(GITHUB_ACTOR)@users.noreply.github.com"
 
