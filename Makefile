@@ -3,10 +3,10 @@
 ROOT_DIR:=$(strip $(shell dirname $(realpath $(lastword $(MAKEFILE_LIST)))))
 
 install:
-	@python -m pip install --upgrade pipenv wheel
+	@sudo -H python -m pip install --upgrade pipenv wheel
 
 init:
-	@pipenv --three install --dev --deploy
+	pipenv --three install --dev --deploy
 
 init_local:
 	@pre-commit install
