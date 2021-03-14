@@ -6,8 +6,7 @@ install:
 	@python -m pip install --upgrade pipenv wheel
 
 init:
-	@pipenv --three install
-	pipenv install --dev --deploy
+	@pipenv --three install --dev --deploy
 
 init_local:
 	@pre-commit install
