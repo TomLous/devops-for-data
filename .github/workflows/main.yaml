@@ -30,7 +30,7 @@ jobs:
       - name: Setup Python
         uses: actions/setup-python@v2
         with:
-          python-version: ${{ steps.vars.outputs.version }}
+          python-version: ${{ steps.vars.outputs.python_version }}
 
       - name: Install pipenv
         run: make install
