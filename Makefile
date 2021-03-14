@@ -26,21 +26,53 @@ package:
 	python setup.py bdist_egg
 	tar czf "release.gzip" dist
 
-bump_minor:
-	@pipenv run bump2version minor --allow-dirty --list
+bump-patch:
+	@pipenv run bumpversion --tag patch --allow-dirty --list --verbose
 
-bump_major:
-	@pipenv run bump2version major --allow-dirty --list
+bump-release:
+	@pipenv run bumpversion --tag release --allow-dirty --list --verbose
+
+bump-snapshot:
+	@if grep -q "dev" "VERSION"; then\
+		pipenv run bumpversion build --allow-dirty --list --no-tag --verbose; \
+	else\
+		pipenv run bumpversion minor --allow-dirty --list --no-tag --verbose; \
+	fi
+
+bump-snapshot-and-push: set-github-config bump-snapshot git-push
+bump-release-and-push: set-github-config bump-release git-push
+bump-patch-and-push: set-github-config bump-patch git-push
 
 version:
-	@cat setup.cfg | grep version | sed s,"^.*= *",,
+	@cat VERSION
 
-requirements:
-	@pipenv lock -r > requirements.txt
-	pipenv lock -r --dev-only > dev-requirements.txt
+python-version:
+	@cat Pipfile | grep python_full_version | awk '{print $$3}' | tr -d '"'
 
-create_hotfix:
-	git checkout -b hotfix $$(git tag | grep -E "^v[0-9]+\.[0-9]+\.[0-9]+$$" | sort -Vr | head -n 1)
+update-requirements:
+	@pipenv run pipenv_to_requirements -f
+	@git add . && git commit -m "Updated Pipfile.lock & requirements.txt"  --no-verify || true
+
+update-requirements-and-push: set-github-config update-requirements git-push
+
+# GIT Commands
+set-github-config: guard-GITHUB_ACTOR
+	git config --global user.name "$(GITHUB_ACTOR)"
+	git config --global user.email "$(GITHUB_ACTOR)@users.noreply.github.com"
+
+git-push:
+	git push
+	git push --tags
+
+
+create-hotfix-branch:
+	git fetch
+	git branch -d hotfix || true
+	git checkout -b hotfix $$(git describe --tags --abbrev=0 | grep -E "^v[0-9]+\.[0-9]+\.[0-9]+$$")
+
+create-feature-branch:
+	@git checkout main && git fetch && git pull
+	git checkout -b feature/$(FEATURE)
 
 run_local: package
 	@DIST=$$(ls $(ROOT_DIR)/dist/*.egg); \
