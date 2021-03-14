@@ -1,0 +1,119 @@
+name: main
+
+on:
+  push:
+    branches:
+      - 'feature/**'
+      - 'hotfix'
+      - 'main'
+
+jobs:
+  build:
+    name: Build & Test
+    runs-on: ubuntu-latest
+    outputs:
+      python_version: ${{ steps.python.outputs.python_version }}
+
+    steps:
+      - name: Check out repository code
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+
+      - name: Variables
+        id: python
+        shell: bash
+        run: echo ::set-output name=python_version::$(make python-version)
+
+      - name: Setup Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: ${{ steps.python.outputs.python_version  }}
+
+      - name: Install pipenv
+        run: make install
+
+      - name: Cache
+        id: cache-pipenv
+        uses: actions/cache@v1
+        with:
+          path: ~/.local/share/virtualenvs
+          key: ${{ runner.os }}-pipenv-${{ hashFiles('**/Pipfile.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-pipenv-
+            ${{ runner.os }}-
+
+      - name: Install dependencies
+        if: steps.cache-pipenv.outputs.cache-hit != 'true'
+        run: make init
+
+      - name: Run analyzer
+        run: make analyze
+
+      - name: Run test suite
+        run: make tests
+
+      - name: Upload test results (junit)
+        uses: actions/upload-artifact@v2
+        if: ${{ always() }}
+        with:
+          name: pytest-results
+          path: junit/test-results.xml
+
+      - name: Upload test results (html)
+        uses: actions/upload-artifact@v2
+        if: ${{ always() }}
+        with:
+          name: pytest-html
+          path: htmlcov
+
+  deploy:
+    if: github.ref == 'refs/heads/main'
+    needs: [build]
+    name: Build & Deploy
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out repository code
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+
+      - name: Setup Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: ${{ needs.build.outputs.python_version }}
+
+      - name: Install pipenv
+        run: make install
+
+      - name: Cache
+        id: cache-pipenv
+        uses: actions/cache@v1
+        with:
+          path: ~/.local/share/virtualenvs
+          key: ${{ runner.os }}-pipenv-${{ hashFiles('**/Pipfile.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-pipenv-
+            ${{ runner.os }}-
+
+      - name: Install dependencies
+        if: steps.cache-pipenv.outputs.cache-hit != 'true'
+        run: make init
+
+      - name: Bump snapshot
+        shell: bash
+        run: make bump-snapshot-and-push
+
+      - name: Package code
+        run: make package
+
+      - name: Upload package
+        uses: actions/upload-artifact@v2
+        with:
+          name: egg
+          path: dist/
+
+      - name: Deploy package to dev
+        run: echo "DEPLOY TO DEV (this is where you would put info for deploying it to your dev env)"
+
