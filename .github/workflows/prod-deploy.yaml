@@ -53,10 +53,10 @@ jobs:
 
     steps:
       - name: Check out repository code
-      uses: actions/checkout@v2
-      with:
-        ref: ${{ needs.prepare-release.outputs.branch }}
-        fetch-depth: 0
+        uses: actions/checkout@v2
+        with:
+          ref: ${{ needs.prepare-release.outputs.branch }}
+          fetch-depth: 0
 
       - name: Setup Python
         uses: actions/setup-python@v2
