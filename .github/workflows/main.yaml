@@ -12,7 +12,7 @@ jobs:
     name: Build & Test
     runs-on: ubuntu-latest
     outputs:
-      python_version: ${{ steps.vars.outputs.python_version }}
+      python_version: ${{ steps.python.outputs.python_version }}
 
     steps:
       - name: Check out repository code
@@ -21,16 +21,14 @@ jobs:
           fetch-depth: 0
 
       - name: Variables
-        id: vars
+        id: python
         shell: bash
-        run: |
-          make python-version
-          echo ::set-output name=python_version::$(make python-version)
+        run: echo ::set-output name=python_version::$(make python-version)
 
       - name: Setup Python
         uses: actions/setup-python@v2
         with:
-          python-version: ${{ steps.vars.outputs.python_version }}
+          python-version: ${{ steps.python.outputs.python_version  }}
 
       - name: Install pipenv
         run: make install
