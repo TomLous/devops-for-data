@@ -5,7 +5,7 @@ Tutorial project for setting up devops flows for data engineers &amp; scientists
 ##  Makefile
 Contains commands used locally and in CI/CD flow
  - make install
- - make init_local
+ - make init-local
 
 ## Pipenv
 Pipenv is now setup.

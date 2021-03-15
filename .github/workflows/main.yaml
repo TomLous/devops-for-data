@@ -4,8 +4,9 @@ on:
   push:
     branches:
       - 'feature/**'
-      - 'hotfix'
-      - 'main'
+      # TODO (4) add main branch
+      # TODO (7) add hotfix branch
+
 
 jobs:
   build:
@@ -48,10 +49,10 @@ jobs:
         run: make init
 
       - name: Run analyzer
-        run: make analyze
+        run: #TODO (3) run analyzer
 
       - name: Run test suite
-        run: make tests
+        run: #TODO (3) run tests
 
       - name: Upload test results (junit)
         uses: actions/upload-artifact@v2
@@ -67,57 +68,58 @@ jobs:
           name: pytest-html
           path: htmlcov
 
-  deploy:
-    if: github.ref == 'refs/heads/main'
-    needs: [build]
-    name: Build & Deploy
-    runs-on: ubuntu-latest
-
-    steps:
-      - name: Check out repository code
-        uses: actions/checkout@v2
-        with:
-          fetch-depth: 0
-
-      - name: Setup Python
-        uses: actions/setup-python@v2
-        with:
-          python-version: ${{ needs.build.outputs.python_version }}
-
-      - name: Install pipenv
-        run: make install
-
-      - name: Cache
-        id: cache-pipenv
-        uses: actions/cache@v1
-        with:
-          path: ~/.local/share/virtualenvs
-          key: ${{ runner.os }}-pipenv-${{ hashFiles('**/Pipfile.lock') }}
-          restore-keys: |
-            ${{ runner.os }}-pipenv-
-            ${{ runner.os }}-
-
-      - name: Install dependencies
-        if: steps.cache-pipenv.outputs.cache-hit != 'true'
-        run: make init
-
-      - name: Update requirements
-        shell: bash
-        run: make update-requirements
-
-      - name: Bump snapshot
-        shell: bash
-        run: make bump-snapshot-and-push
-
-      - name: Package code
-        run: make package
-
-      - name: Upload package
-        uses: actions/upload-artifact@v2
-        with:
-          name: egg
-          path: dist/
-
-      - name: Deploy package to dev
-        run: echo "DEPLOY TO DEV (this is where you would put info for deploying it to your dev env)"
+# TODO (4) uncomment
+#  deploy:
+#    if: github.ref == 'refs/heads/main'
+#    needs: [build]
+#    name: Build & Deploy
+#    runs-on: ubuntu-latest
+#
+#    steps:
+#      - name: Check out repository code
+#        uses: actions/checkout@v2
+#        with:
+#          fetch-depth: 0
+#
+#      - name: Setup Python
+#        uses: actions/setup-python@v2
+#        with:
+#          python-version: ${{ needs.build.outputs.python_version }}
+#
+#      - name: Install pipenv
+#        run: make install
+#
+#      - name: Cache
+#        id: cache-pipenv
+#        uses: actions/cache@v1
+#        with:
+#          path: ~/.local/share/virtualenvs
+#          key: ${{ runner.os }}-pipenv-${{ hashFiles('**/Pipfile.lock') }}
+#          restore-keys: |
+#            ${{ runner.os }}-pipenv-
+#            ${{ runner.os }}-
+#
+#      - name: Install dependencies
+#        if: steps.cache-pipenv.outputs.cache-hit != 'true'
+#        run: make init
+#
+#      - name: Update requirements
+#        shell: bash
+#        run: make update-requirements
+#
+#      - name: Bump snapshot
+#        shell: bash
+#        run: make bump-snapshot-and-push
+#
+#      - name: Package code
+#        run: #TODO (4) package
+#
+#      - name: Upload package
+#        uses: actions/upload-artifact@v2
+#        with:
+#          name: egg
+#          path: dist/
+#
+#      - name: Deploy package to dev
+#        run: echo "DEPLOY TO DEV (this is where you would put info for deploying it to your dev env)"
 

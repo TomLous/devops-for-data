@@ -21,7 +21,7 @@ init-local:
 
 .PHONY: analyze
 analyze:
-	@pipenv run flake8 ./src
+	# TODO (2) run flake8 on code
 
 .PHONY: tests
 tests:
