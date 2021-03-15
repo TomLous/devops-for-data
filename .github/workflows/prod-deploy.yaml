@@ -16,6 +16,12 @@ jobs:
     if: contains(github.event.pull_request.labels.*.name, 'release') && github.event.pull_request.merged == true && (github.event.pull_request.head.ref == 'release' || github.event.pull_request.head.ref == 'hotfix')
 
     steps:
+      - name: Check out repository code
+        uses: actions/checkout@v2
+        with:
+          ref: ${{ github.event.pull_request.head.sha }}
+          fetch-depth: 0
+
       - name: Python version
         id: python
         shell: bash
