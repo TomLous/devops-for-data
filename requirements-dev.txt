@@ -10,13 +10,55 @@
 # `Pipfile.lock` and then regenerate `requirements*.txt`.
 ################################################################################
 
-bump2version
-codecov
-flake8
-pip>=20.0.2
-pipenv
-pipenv-setup
-pipenv-to-requirements
-psutil
-pytest-cov
-pytest-spark>=0.6.0
+appdirs==1.4.4
+attrs==20.3.0 ; python_version >= '2.7' and python_version not in '3.0, 3.1, 3.2, 3.3'
+black==19.10b0 ; python_version >= '3.6'
+bump2version==1.0.1
+cached-property==1.5.2
+cerberus==1.3.2
+certifi==2020.12.5
+chardet==4.0.0 ; python_version >= '2.7' and python_version not in '3.0, 3.1, 3.2, 3.3, 3.4'
+click==7.1.2 ; python_version >= '2.7' and python_version not in '3.0, 3.1, 3.2, 3.3, 3.4'
+codecov==2.1.11
+colorama==0.4.4 ; python_version >= '2.7' and python_version not in '3.0, 3.1, 3.2, 3.3, 3.4'
+coverage==5.5 ; python_version >= '2.7' and python_version not in '3.0, 3.1, 3.2, 3.3, 3.4' and python_version < '4'
+distlib==0.3.1
+filelock==3.0.12
+findspark==1.4.2
+flake8==3.9.0
+idna==2.10 ; python_version >= '2.7' and python_version not in '3.0, 3.1, 3.2, 3.3'
+iniconfig==1.1.1
+mccabe==0.6.1
+orderedmultidict==1.0.1
+packaging==20.9 ; python_version >= '2.7' and python_version not in '3.0, 3.1, 3.2, 3.3'
+pathspec==0.8.1
+pbr==5.5.1 ; python_version >= '2.6'
+pep517==0.10.0
+pip-shims==0.5.3 ; python_version >= '2.7' and python_version not in '3.0, 3.1, 3.2, 3.3, 3.4'
+pipenv-setup==3.1.1
+pipenv-to-requirements==0.9.0
+pipenv==2020.11.15
+pipfile==0.0.2
+plette[validation]==0.2.3 ; python_version >= '2.6' and python_version not in '3.0, 3.1, 3.2, 3.3'
+pluggy==0.13.1 ; python_version >= '2.7' and python_version not in '3.0, 3.1, 3.2, 3.3'
+psutil==5.8.0
+py==1.10.0 ; python_version >= '2.7' and python_version not in '3.0, 3.1, 3.2, 3.3'
+pycodestyle==2.7.0 ; python_version >= '2.7' and python_version not in '3.0, 3.1, 3.2, 3.3'
+pyflakes==2.3.0 ; python_version >= '2.7' and python_version not in '3.0, 3.1, 3.2, 3.3'
+pyparsing==2.4.7 ; python_version >= '2.6' and python_version not in '3.0, 3.1, 3.2, 3.3'
+pytest-cov==2.11.1
+pytest-spark==0.6.0
+pytest==6.2.2 ; python_version >= '3.6'
+python-dateutil==2.8.1 ; python_version >= '2.7' and python_version not in '3.0, 3.1, 3.2, 3.3'
+regex==2020.11.13
+requests==2.25.1 ; python_version >= '2.7' and python_version not in '3.0, 3.1, 3.2, 3.3, 3.4'
+requirementslib==1.5.16 ; python_version >= '2.7' and python_version not in '3.0, 3.1, 3.2, 3.3, 3.4'
+six==1.15.0 ; python_version >= '2.7' and python_version not in '3.0, 3.1, 3.2, 3.3'
+toml==0.10.2 ; python_version >= '2.6' and python_version not in '3.0, 3.1, 3.2, 3.3'
+tomlkit==0.7.0 ; python_version >= '2.7' and python_version not in '3.0, 3.1, 3.2, 3.3, 3.4'
+typed-ast==1.4.2
+urllib3==1.26.3 ; python_version >= '2.7' and python_version not in '3.0, 3.1, 3.2, 3.3, 3.4' and python_version < '4'
+virtualenv-clone==0.5.4 ; python_version >= '2.7' and python_version not in '3.0, 3.1, 3.2, 3.3'
+virtualenv==20.4.2 ; python_version >= '2.7' and python_version not in '3.0, 3.1, 3.2, 3.3'
+vistir==0.5.2 ; python_version >= '2.7' and python_version not in '3.0, 3.1, 3.2, 3.3'
+wheel==0.36.2 ; python_version >= '2.7' and python_version not in '3.0, 3.1, 3.2, 3.3, 3.4'
