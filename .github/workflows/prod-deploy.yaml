@@ -67,7 +67,7 @@ jobs:
       - name: Setup Python
         uses: actions/setup-python@v2
         with:
-          python-version: #TODO (6) get python version from previous job
+          python-version: ${{ needs.prepare-release.outputs.python_version }}
 
       - name: Install pipenv
         run: make install
@@ -114,7 +114,6 @@ jobs:
           release_name: Release ${{  needs.prepare-release.outputs.version }}
           draft: false
           prerelease: false
-
 
       - name: Delete current release/hotfix branch
         uses: dawidd6/action-delete-branch@v3
