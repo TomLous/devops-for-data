@@ -88,16 +88,13 @@ jobs:
       - name: Package code
         run: make package
 
-      - name: Push version & tag
-        run: make git-push
-
       - name: Upload package
         uses: actions/upload-artifact@v2
         with:
           name: egg-${{ steps.vars.outputs.version }}
           path: dist/
 
-      - name: Deploy package to test
+      - name: Deploy package to prod
         run: echo "DEPLOY v${{ steps.vars.outputs.version }} TO PROD"
 
 
