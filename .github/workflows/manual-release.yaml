@@ -87,6 +87,8 @@ jobs:
       - name: Bump Release
         if: steps.type.outputs.branch == 'release'
         shell: bash
+        env:
+          BUMP_TYPE: ${{ github.event.inputs.bump_type }}
         run: make bump-release-and-push
 
       - name: Bump Hotfix
@@ -170,9 +172,6 @@ jobs:
 
       - name: Package code
         run: make package
-
-      - name: Push version & tag
-        run: make git-push
 
       - name: Upload package
         uses: actions/upload-artifact@v2

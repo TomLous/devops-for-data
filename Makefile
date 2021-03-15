@@ -41,14 +41,14 @@ bump-patch:
 
 .PHONY: bump-release
 bump-release:
-	@pipenv run bumpversion --tag release --allow-dirty --list --verbose
+	@pipenv run bumpversion --tag $(BUMP_TYPE) --allow-dirty --list --verbose
 
 .PHONY: bump-snapshot
 bump-snapshot:
 	@if grep -q "dev" "VERSION"; then\
 		pipenv run bumpversion build --allow-dirty --list --no-tag --verbose; \
 	else\
-		pipenv run bumpversion minor --allow-dirty --list --no-tag --verbose; \
+		pipenv run bumpversion release --allow-dirty --list --no-tag --verbose; \
 	fi
 
 .PHONY: bump-snapshot-and-push

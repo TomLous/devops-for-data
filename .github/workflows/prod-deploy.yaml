@@ -143,7 +143,6 @@ jobs:
           TAG=$(git describe --exact-match ${{ github.event.pull_request.head.sha }})
           echo $TAG
           git tag -d $TAG
-          git push --delete origin $TAG
-          git push -v origin :refs/tags/$TAG
+          git push --tags origin :refs/tags/$TAG
 
 
