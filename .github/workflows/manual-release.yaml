@@ -89,7 +89,7 @@ jobs:
         shell: bash
         env:
           BUMP_TYPE: ${{ github.event.inputs.bump_type }}
-        run: # TODO (5) bump version & push tag
+        run: make bump-release-and-push
 
       # TODO (7)
       #      - name: Bump Hotfix
