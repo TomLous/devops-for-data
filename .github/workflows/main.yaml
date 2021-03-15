@@ -101,6 +101,10 @@ jobs:
         if: steps.cache-pipenv.outputs.cache-hit != 'true'
         run: make init
 
+      - name: Update requirements
+        shell: bash
+        run: make update-requirements
+
       - name: Bump snapshot
         shell: bash
         run: make bump-snapshot-and-push

@@ -10,4 +10,13 @@
 # `Pipfile.lock` and then regenerate `requirements*.txt`.
 ################################################################################
 
-pyspark>=3.1.1
+bump2version
+codecov
+flake8
+pip>=20.0.2
+pipenv
+pipenv-setup
+pipenv-to-requirements
+psutil
+pytest-cov
+pytest-spark>=0.6.0

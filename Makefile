@@ -97,7 +97,11 @@ create-feature-branch:
 	@git checkout main && git fetch && git pull
 	git checkout -b feature/$(FEATURE)
 
-.PHONY: run_local
-run_local: package
-	@DIST=$$(ls $(ROOT_DIR)/dist/*.egg); \
-    spark-submit --py-files $$DIST src/main.py --job $(JOB_NAME) --res-path $(ROOT_DIR)/$(CONF_PATH)
+.PHONY: run-local
+run-local: package
+	DIST=$$(ls $(ROOT_DIR)/dist/*.egg); \
+    spark-submit \
+    --conf spark.driver.extraJavaOptions="-Dlog4j.configuration=file://$(ROOT_DIR)/$(CONF_PATH)/$(JOB_NAME)/resources/log4j.properties" \
+    --py-files $$DIST src/main.py \
+    --job $(JOB_NAME) --res-path $(ROOT_DIR)/$(CONF_PATH)
+

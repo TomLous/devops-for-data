@@ -9,10 +9,3 @@ repos:
         files: Pipfile
         pass_filenames: False
 
-      - id: pipenv_to_requirements
-        name: pipenv_to_requirements
-        stages: [push]
-        language: system
-        entry: TODO check requirements
-        files: "^Pipfile(?:.lock)?$"
-        pass_filenames: False

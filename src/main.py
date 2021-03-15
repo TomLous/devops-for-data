@@ -12,7 +12,7 @@ if os.path.exists('jobs.zip'):
 
 def get_config(path, job):
     file_path = path + '/' + job + '/resources/args.json'
-    with open(file_path, encoding='utf-8') as json_file:
+    with open(file_path) as json_file:
         config = json.loads(json_file.read())
     config['relative_path'] = path
     return config
