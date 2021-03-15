@@ -5,7 +5,7 @@ on:
     branches:
       - 'feature/**'
       - 'main'
-      # TODO (7) add hotfix branch
+      - 'hotfix'
 
 
 jobs:
