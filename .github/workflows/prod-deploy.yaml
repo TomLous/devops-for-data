@@ -67,7 +67,7 @@ jobs:
       - name: Setup Python
         uses: actions/setup-python@v2
         with:
-          python-version: ${{ needs.prepare-release.outputs.python_version }}
+          python-version: #TODO (6) get python version from previous job
 
       - name: Install pipenv
         run: make install
