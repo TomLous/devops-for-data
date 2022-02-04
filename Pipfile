@@ -8,6 +8,8 @@ python_full_version = "3.9.9"
 
 [packages]
 pyspark = ">=3.1.1"
+pyyaml = "*"
+setuptools = "*"
 
 [dev-packages]
 pip = ">=20.0.2"

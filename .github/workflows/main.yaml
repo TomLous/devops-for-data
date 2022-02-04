@@ -49,10 +49,10 @@ jobs:
         run: make init
 
       - name: Run analyzer
-        run: echo "run analyzer" #TODO (3) run analyzer
+        run: make analyze
 
       - name: Run test suite
-        run: echo "run tests" #TODO (3) run tests
+        run: make tests
 
       - name: Upload test results (junit)
         uses: actions/upload-artifact@v2
