@@ -21,7 +21,7 @@ init-local:
 
 .PHONY: analyze
 analyze:
-	@pipenv run flake8 ./src
+	@pipenv run flake8
 
 .PHONY: tests
 tests:
@@ -35,6 +35,7 @@ package:
 	python setup.py bdist_egg
 	tar czf "release.gzip" dist
 
+# TODO fix semver (1.1.0-dev3 => 1.1.0, not 1.2.0)
 .PHONY: bump-patch
 bump-patch:
 	@pipenv run bumpversion --tag patch --allow-dirty --list --verbose
@@ -85,9 +86,9 @@ git-push:
 	git push
 	git push --tags
 
-
 .PHONY: create-hotfix-branch
 create-hotfix-branch:
+	# TODO fix last tag (git describe --tags != git tag)
 	git fetch
 	git branch -d hotfix || true
 	git checkout -b hotfix $$(git describe --tags --abbrev=0 | grep -E "^v[0-9]+\.[0-9]+\.[0-9]+$$")

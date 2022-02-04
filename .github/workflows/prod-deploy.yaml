@@ -115,7 +115,6 @@ jobs:
           draft: false
           prerelease: false
 
-
       - name: Delete current release/hotfix branch
         uses: dawidd6/action-delete-branch@v3
         continue-on-error: true
@@ -140,6 +139,7 @@ jobs:
       - name: Delete tag
         shell: bash
         run: |
+          # TODO fix tag deletion
           TAG=$(git describe --exact-match ${{ github.event.pull_request.head.sha }})
           echo $TAG
           git tag -d $TAG

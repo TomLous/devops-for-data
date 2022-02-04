@@ -4,8 +4,9 @@ on:
   push:
     branches:
       - 'feature/**'
-      - 'hotfix'
       - 'main'
+      - 'hotfix'
+
 
 jobs:
   build:
@@ -66,6 +67,7 @@ jobs:
         with:
           name: pytest-html
           path: htmlcov
+
 
   deploy:
     if: github.ref == 'refs/heads/main'
