@@ -4,7 +4,7 @@ on:
   push:
     branches:
       - 'feature/**'
-#       TODO (4) add main branch
+      - 'main'
 #       TODO (7) add hotfix branch
 
 
