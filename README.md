@@ -44,3 +44,4 @@ When a release is abandoned sometimes the tag is not removed. to fix it
 - [ ] java version check (issues v17?)
   - https://stackoverflow.com/questions/47891295/cannot-access-a-member-of-class-java-nio-directbytebuffer-in-module-java-base
 - [ ] Update github actions versions?
+- [ ] share/switch multiple screens

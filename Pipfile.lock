@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "fb1a537def3da7ace323b75727cb6d6a4dd01746b354447e7e1f2763b8e8ba23"
+            "sha256": "6b3967f2e99552625056aae539b7a4d7eb70a620f80a8a1b52d63705ec72cdde"
         },
         "pipfile-spec": 6,
         "requires": {
@@ -16,6 +16,14 @@
         ]
     },
     "default": {
+        "lark": {
+            "hashes": [
+                "sha256:10818563b44e18ea264b5013a80fe04406999ad51bacc74214f69f13d95af6e1",
+                "sha256:2269dee215e6c689d5ce9d34fdc6e749d0c1c763add3fc7935938ebd7da159cb"
+            ],
+            "index": "pypi",
+            "version": "==1.0.0"
+        },
         "py4j": {
             "hashes": [
                 "sha256:04f5b06917c0c8a81ab34121dda09a2ba1f74e96d59203c821d5cb7d28c35363",
@@ -172,7 +180,9 @@
             "version": "==0.4.4"
         },
         "coverage": {
-            "extras": [],
+            "extras": [
+                "toml"
+            ],
             "hashes": [
                 "sha256:1245ab82e8554fa88c4b2ab1e098ae051faac5af829efdcf2ce6b34dccd5567c",
                 "sha256:1bc6d709939ff262fd1432f03f080c5042dc6508b6e0d3d20e61dd045456a1a0",
