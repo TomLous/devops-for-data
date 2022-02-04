@@ -139,7 +139,7 @@ jobs:
       - name: Delete tag
         shell: bash
         run: |
-          # TODO fix tag deletion
+          # TODO fix tag deletion => sometimes the tag is on another commit in the branch
           TAG=$(git describe --exact-match ${{ github.event.pull_request.head.sha }})
           echo $TAG
           git tag -d $TAG
