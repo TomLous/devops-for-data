@@ -18,7 +18,7 @@ jobs:
       python_version: ${{ steps.python.outputs.python_version }}
       pr_url: ${{ steps.pr.outputs.pr_url }}
 
-    if: github.ref == 'refs/heads/main' #|| github.ref == 'refs/heads/hotfix' # TODO (7)
+    if: github.ref == 'refs/heads/main' || github.ref == 'refs/heads/hotfix'
 
     steps:
       - name: Set release type
@@ -89,13 +89,12 @@ jobs:
         shell: bash
         env:
           BUMP_TYPE: ${{ github.event.inputs.bump_type }}
-        run: echo "bump" # TODO (5) bump version & push tag
+        run: make bump-release-and-push
 
-#       TODO (7)
-#            - name: Bump Hotfix
-#              if: steps.type.outputs.branch == 'hotfix'
-#              shell: bash
-#              run: make bump-patch-and-push
+      - name: Bump Hotfix
+        if: steps.type.outputs.branch == 'hotfix'
+        shell: bash
+        run: make bump-patch-and-push
 
       - name: Set variables
         id: vars
