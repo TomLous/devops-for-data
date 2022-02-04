@@ -12,7 +12,7 @@ jobs:
       version: ${{ steps.vars.outputs.version }}
       python_version: ${{ steps.python.outputs.python_version }}
 
-    # If merged & pr was tagged release & from a release branch
+#     If merged & pr was tagged release & from a release branch
     if: contains(github.event.pull_request.labels.*.name, 'release') && github.event.pull_request.merged == true && (github.event.pull_request.head.ref == 'release' || github.event.pull_request.head.ref == 'hotfix')
 
     steps:
@@ -67,7 +67,7 @@ jobs:
       - name: Setup Python
         uses: actions/setup-python@v2
         with:
-          python-version: #TODO (6) get python version from previous job
+          python-version: 0 #TODO (6) get python version from previous job
 
       - name: Install pipenv
         run: make install
@@ -126,7 +126,7 @@ jobs:
     name: Abandon Release to Prod
     runs-on: ubuntu-latest
 
-    # If PR was closed, but not merged
+#     If PR was closed, but not merged
     if: contains(github.event.pull_request.labels.*.name, 'release') && github.event.pull_request.merged == false && github.event.pull_request.head.ref == 'release'
 
     steps:

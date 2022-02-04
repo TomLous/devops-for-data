@@ -4,8 +4,8 @@ on:
   push:
     branches:
       - 'feature/**'
-      # TODO (4) add main branch
-      # TODO (7) add hotfix branch
+#       TODO (4) add main branch
+#       TODO (7) add hotfix branch
 
 
 jobs:
@@ -49,10 +49,10 @@ jobs:
         run: make init
 
       - name: Run analyzer
-        run: #TODO (3) run analyzer
+        run: echo "run analyzer" #TODO (3) run analyzer
 
       - name: Run test suite
-        run: #TODO (3) run tests
+        run: echo "run tests" #TODO (3) run tests
 
       - name: Upload test results (junit)
         uses: actions/upload-artifact@v2
